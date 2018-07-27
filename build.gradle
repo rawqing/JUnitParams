@@ -1,0 +1,55 @@
+buildscript {
+    ext.group_Id = "pl.pragmatists"
+    ext.artifact_Id = "JUnitParams"
+    ext.ver = "1.1.2.2"
+
+}
+
+group 'pl.pragmatists'
+version '1.1.2.2'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "${mavenLocal().url}")
+
+            pom.groupId = "$group_Id"
+            pom.artifactId = "$artifact_Id"
+            pom.version = "$ver"
+        }
+    }
+}
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            artifact sourceJar
+            groupId "$group_Id"
+            artifactId "$artifact_Id"
+            version "$ver"
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier "sources" //定义一个标志 (生成的jar包后面加上sources, 如: jlib-2.2.11-sources.jar)
+}
+sourceCompatibility = 1.8
+
+repositories {
+    jcenter()
+    mavenCentral()
+    mavenLocal()
+}
+dependencies {
+    compile group: 'junit', name: 'junit', version:'4.12'
+    testCompile group: 'org.assertj', name: 'assertj-core', version:'1.7.1'
+}
