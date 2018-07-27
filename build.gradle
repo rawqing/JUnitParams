@@ -45,11 +45,11 @@ task sourceJar(type: Jar) {
 sourceCompatibility = 1.8
 
 repositories {
-    jcenter()
     mavenCentral()
+    jcenter()
     mavenLocal()
 }
 dependencies {
-    compile group: 'junit', name: 'junit', version:'4.12'
+    compile 'junit:junit:4.12'
     testCompile group: 'org.assertj', name: 'assertj-core', version:'1.7.1'
 }
